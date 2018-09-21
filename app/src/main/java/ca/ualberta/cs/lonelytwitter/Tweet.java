@@ -1,11 +1,14 @@
 package ca.ualberta.cs.lonelytwitter;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public abstract class Tweet {
     // will hold each tweet
     private String message;
     private Date date;
+    // have a list of emotions for each tweet
+    private ArrayList<Mood> moods;
 
     public Tweet (String message) {
         this.message = message;
@@ -21,6 +24,16 @@ public abstract class Tweet {
             throw new TooLongTweetException();
         }
         this.message = message;
+    }
+
+    public void addMood(Mood mood) {
+        // add a mood to the list of moods for the tweet
+        this.moods.add(mood);
+    }
+
+    public ArrayList<Mood> getMoods() {
+        // returns a list of moods
+        return this.moods;
     }
 
     public void setDate(Date date){
