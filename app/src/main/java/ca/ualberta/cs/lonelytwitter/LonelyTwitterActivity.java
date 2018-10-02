@@ -14,7 +14,9 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -47,8 +49,14 @@ public class LonelyTwitterActivity extends Activity {
 
 			public void onClick(View v) {
 				String text = bodyText.getText().toString();
-				ImportantTweet newTweet = new ImportantTweet(text);
-				tweets.add(newTweet);
+				try {
+					ImportantTweet newTweet = new ImportantTweet(text);
+					tweets.add(newTweet);
+				}
+				catch (TooLongTweetException e) {
+					//display an error message
+					e.DisplayErrorMessage(LonelyTwitterActivity.this);
+				}
 				adapter.notifyDataSetChanged();
 				saveInFile();
 			}
@@ -84,7 +92,7 @@ public class LonelyTwitterActivity extends Activity {
 			BufferedReader reader = new BufferedReader(isr); // this way prevents it from reading just
 															  // characters
 			Gson gson = new Gson();
-			Type typeListTweets = new TypeToken<ArrayList<ImportantTweet>>(){}.getType();
+			Type typeListTweets = new TypeToken<ArrayList<Tweet>>(){}.getType();
 			tweets = gson.fromJson(reader, typeListTweets);
 
 		} catch (FileNotFoundException e) {

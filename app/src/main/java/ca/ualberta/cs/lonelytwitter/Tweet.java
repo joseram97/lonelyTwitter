@@ -10,9 +10,14 @@ public abstract class Tweet {
     // have a list of emotions for each tweet
     private ArrayList<Mood> moods;
 
-    public Tweet (String message) {
-        this.message = message;
-        this.date = new Date();
+    public Tweet (String message) throws TooLongTweetException{
+        if (message.length() > 140){
+            throw new TooLongTweetException();
+        }
+        else {
+            this.message = message;
+            this.date = new Date();
+        }
     }
 
     public Tweet (String message, Date date) {
