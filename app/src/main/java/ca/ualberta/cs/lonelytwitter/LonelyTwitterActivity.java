@@ -42,7 +42,7 @@ public class LonelyTwitterActivity extends Activity {
 
 		bodyText = (EditText) findViewById(R.id.body);
 		Button saveButton = (Button) findViewById(R.id.save);
-		Button clearButton = (Button) findViewById(R.id.clear);
+		Button searchButton = (Button) findViewById(R.id.search);
 		oldTweetsList = (ListView) findViewById(R.id.oldTweetsList);
 
 		saveButton.setOnClickListener(new View.OnClickListener() {
@@ -53,16 +53,22 @@ public class LonelyTwitterActivity extends Activity {
 				Tweet newTweet = new NormalTweet(text);
 				tweetList.add(newTweet);
 				adapter.notifyDataSetChanged();
-				new ElasticsearchTweetController.AddtweetTask(newTweet).execute(newTweet);
+				new ElasticsearchTweetController.AddtweetTask().execute(newTweet);
 			}
 		});
 
-		clearButton.setOnClickListener(new View.OnClickListener() {
+		searchButton.setOnClickListener(new View.OnClickListener() {
 
 			public void onClick(View v) {
 				setResult(RESULT_OK);
-				tweetList.clear();
-				deleteFile(FILENAME);  // TODO deprecate this button
+				String text = bodyText.getText().toString();
+				try {
+					tweetList = new ElasticsearchTweetController.SearchTweetsTask().execute(text).get();
+				}
+				catch (Exception e){
+					// never do this for the project, but good enough for now
+				}
+				//deleteFile(FILENAME);  // TODO deprecate this button
 				adapter.notifyDataSetChanged();
 			}
 		});

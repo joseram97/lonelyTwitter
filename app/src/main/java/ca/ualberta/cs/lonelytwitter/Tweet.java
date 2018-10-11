@@ -2,11 +2,13 @@ package ca.ualberta.cs.lonelytwitter;
 
 import java.util.Date;
 
+import io.searchbox.annotations.JestId;
+
 public abstract class Tweet implements Tweetable {
     private String message;
     private Date date;
 
-    @JestID
+    @JestId
     private String tweetID;
 
     public Tweet(String message){
@@ -47,6 +49,6 @@ public abstract class Tweet implements Tweetable {
         return date;
     }
 
-    public void addTweetID(String tweetID){this.tweetID = tweetID;}
+    public void setTweetID(String tweetID){this.tweetID = tweetID;}
 
 }
