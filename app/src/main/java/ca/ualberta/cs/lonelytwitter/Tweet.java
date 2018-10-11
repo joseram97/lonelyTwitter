@@ -6,6 +6,9 @@ public abstract class Tweet implements Tweetable {
     private String message;
     private Date date;
 
+    @JestID
+    private String tweetID;
+
     public Tweet(String message){
         this.message = message;
         this.date = new Date();
@@ -43,4 +46,7 @@ public abstract class Tweet implements Tweetable {
     public Date getDate() {
         return date;
     }
+
+    public void addTweetID(String tweetID){this.tweetID = tweetID;}
+
 }
