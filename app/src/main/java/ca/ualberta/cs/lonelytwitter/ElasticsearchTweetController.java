@@ -78,19 +78,14 @@ public class ElasticsearchTweetController {
             // Taken from https://github.com/searchbox-io/Jest/tree/master/jest#searching-documents
             // under the 'Searching documents' section
             String query = "{\n" +
-                    "    \"query\": {\n" +
-                    "        \"filtered\" : {\n" +
                     "            \"query\" : {\n" +
                     "                \"query_string\" : {\n" +
-                    "                    \"query\" : \"test\"\n" +
+                    "                    \"default_field\" : \"message\",\n" +
+                    "                    \"query\" : \"" + params[0] + "\"\n" +
                     "                }\n" +
-                    "            },\n" +
-                    "            \"filter\" : {\n" +
-                    "                \"term\" : { \"message\" : \"" + params[0] + "\" }\n" +
                     "            }\n" +
-                    "        }\n" +
-                    "    }\n" +
                     "}";
+
 
             Search search = new Search.Builder(query)
                     .addIndex("jose-wednesday")

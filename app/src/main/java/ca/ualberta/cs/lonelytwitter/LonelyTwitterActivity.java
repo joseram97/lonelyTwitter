@@ -7,9 +7,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.lang.reflect.Array;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
@@ -63,7 +66,11 @@ public class LonelyTwitterActivity extends Activity {
 				setResult(RESULT_OK);
 				String text = bodyText.getText().toString();
 				try {
-					tweetList = new ElasticsearchTweetController.SearchTweetsTask().execute(text).get();
+					// taken from:
+					// https://stackoverflow.com/questions/8985432/how-to-use-arraylist-addall
+					ArrayList<Tweet> temp = new ElasticsearchTweetController.SearchTweetsTask().execute(text).get();
+					tweetList.clear();
+					tweetList.addAll(temp);
 				}
 				catch (Exception e){
 					// never do this for the project, but good enough for now
