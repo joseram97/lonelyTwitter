@@ -2,6 +2,7 @@ package ca.ualberta.cs.lonelytwitter;
 
 import android.test.ActivityInstrumentationTestCase2;
 
+import java.util.List;
 import java.util.ListIterator;
 
 /**
@@ -79,11 +80,12 @@ public class TweetListTest extends ActivityInstrumentationTestCase2 {
         tweets.addTweet(tweet);
         tweets.addTweet(tweet2);
         ListIterator<Tweet> itr = tweets.getTweets().listIterator();
-        while (itr.hasNext()){
-
+        for (int i = 0; i < tweets.getCount(); i++) {
+            List<Tweet> checkList = tweets.getTweets();
+            if (checkList.get(i).getDate().after(checkList.get(i+1).getDate())) {
+                assertTrue(Boolean.FALSE);
+            }
         }
-        for (Tweet itr: tweets.getTweets().iterator()) {
-
-        }
+        assertTrue(Boolean.TRUE);
     }
 }
